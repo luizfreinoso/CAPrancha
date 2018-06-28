@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load staticfiles %} 
+
+{% block main %}
+{% for p in  board.prancha.object_list %}
+<div class="btn-group btn-group-lg float-right" role="group"
+	aria-label="Basic example">
+	{% if board.prancha.has_previous %}
+	<button type="button" class="btn btn-primary" onclick="paginacao({{board.prancha.previous_page_number}});">
+		<i class="fas fa-chevron-left"></i>
+	</button>
+	{% else %}
+	<button type="button" class="btn btn-primary" disabled>
+		<i class="fas fa-chevron-left"></i>
+	</button>
+	{% endif %}
+	
+	{% if board.prancha.has_next %}
+	<button type="button" class="btn btn-primary" onclick="paginacao({{board.prancha.next_page_number}});">
+		<i class="fas fa-chevron-right"></i>
+	</button>
+	{% else %}
+	<button type="button" class="btn btn-primary" disabled>
+		<i class="fas fa-chevron-right"></i>
+	</button>
+	{% endif %}
+</div>
+
+<h1 class="cover-heading extra-c">
+	 {{p.nome}} <i class="fas fa-info-circle"
+		data-toggle="tooltip" data-placement="bottom"
+		title="{{p.descricao}}"></i>
+</h1>
+
+<div class="container">
+	<div class="row">
+		{% for imagem in p.mediaprojeto_set.all %}
+			{% if forloop.counter0|divisibleby:4 %}
+			</div>
+			<div class="row">
+			{% endif %}
+			<div class="col-sm">
+				<img src="{% static imagem.arquivo %}" class="rounded img-fluid d-block mb-4 fas fa-info-circle" 
+					 data-sig="{{imagem.significado}}" data-toggle="tooltip" data-placement="bottom"
+					 alt="{{imagem.significado}}" title="{{imagem.significado}}" />
+			</div>
+		{% endfor %}
+	</div>
+</div>
+
+<div class="btn-group btn-group-lg float-right" role="group"
+	aria-label="Basic example">
+	{% if board.prancha.has_previous %}
+	<button type="button" class="btn btn-primary" onclick="paginacao({{board.prancha.previous_page_number}});">
+		<i class="fas fa-chevron-left"></i>
+	</button>
+	{% else %}
+	<button type="button" class="btn btn-primary" disabled>
+		<i class="fas fa-chevron-left"></i>
+	</button>
+	{% endif %}
+	
+	{% if board.prancha.has_next %}
+	<button type="button" class="btn btn-primary" onclick="paginacao({{board.prancha.next_page_number}});">
+		<i class="fas fa-chevron-right"></i>
+	</button>
+	{% else %}
+	<button type="button" class="btn btn-primary" disabled>
+		<i class="fas fa-chevron-right"></i>
+	</button>
+	{% endif %}
+</div>
+
+{% endfor %}
+<div class="alert alert-info" role="alert"
+	style="width: 75%; z-index: 0; display: none">
+	<b>Glosa: </b> fala montada.
+</div>
+
+{% endblock %}
